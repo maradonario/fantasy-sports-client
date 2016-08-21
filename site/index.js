@@ -1,7 +1,7 @@
 var express = require('express');
-
+var yahooclient = require('./lib/yahoo-api-client.js');
 var app = express();
-
+var creds = require('./credentials.js');
 // set up handle bars
 var handlebars = require('express-handlebars').create({ 
     defaultLayout : 'main',
@@ -24,6 +24,7 @@ app.use(express.static(__dirname + '/public'));
 
 // link body-parser
 app.use(require('body-parser').urlencoded({ extended : true}));
+var yClient = new yahooclient(creds.yahoo.key, creds.yahoo.secret);
 
 // middle ware for partial views
 app.use(function(req, res, next){
@@ -35,7 +36,9 @@ app.use(function(req, res, next){
 
 // home page
 app.get('/', function(req, res) {
+    yClient.getToken();
     res.render('home');
+
 });
 
 
