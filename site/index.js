@@ -36,8 +36,9 @@ app.use(function(req, res, next){
 
 // home page
 app.get('/', function(req, res) {
-    yClient.getToken();
-    res.render('home');
+    yClient.getToken(req, res);
+
+
 
 });
 
